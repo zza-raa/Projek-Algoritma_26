@@ -323,6 +323,58 @@ void mencari_barang(data_barang db[]){
     system ("cls");
 }
 
+void total_belanja(data_barang db[], int jumlah_barang){
+	string cari_kode;
+	int total_bayar = 0;
+	int total_keseluruhan = 0;
+	int jumlah, jumlah_item;
+	
+	cout << "Masukkan jumlah item: ";
+	cin >> jumlah_item;	
+		
+		for(int i = 0; i < jumlah_barang; i++){
+			bool ditemukan = false;
+			
+			cout << "\nMasukkan Kode Barang: ";
+			cin >> cari_kode;
+			
+			for(int j = 0; j < jumlah_item; j++) {
+				if(db[j].kode_brg == cari_kode) {
+					
+					ditemukan = true;
+					
+					cout << "\nKode Barang : " << db[j].kode_brg << endl
+					     << "Nama Barang : " << db[j].nama_brg << endl
+					     << "Jumlah Barang : ";
+				    cin >> jumlah;
+				
+					if(jumlah > db[j].stok_brg) {
+						cout << "\nMohon Maaf, ketersediaan stok hanya " << db[j].stok_brg << endl;
+					} else {
+						total_bayar = db[j].harga_brg * jumlah;
+						total_keseluruhan += total_bayar;
+						
+						db[j].stok_brg -= jumlah;
+						
+						cout << "Barang berhasil ditambahkan ke keranjang\n";
+						cout << "Subtotal : Rp" << total_bayar << endl;
+						cout << "Sisa Stok   : " << db[j].stok_brg << endl;
+					}
+					break;
+				}
+			}
+			
+			if(!ditemukan) {
+				cout << "Kode barang tidak ditemukan!\n";
+			}
+		} 
+	
+	cout << "\nTotal Belanja : Rp " << total_keseluruhan;
+	
+	system("pause");
+	system("cls");
+}
+
 int main(){
     data_barang db[1000];
     int pilih;
